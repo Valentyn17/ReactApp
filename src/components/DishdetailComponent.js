@@ -80,9 +80,11 @@ class DishDetail extends Component{
         const dishComments = this.renderComments(dish.comments);
 
         return (
+            <div className="container">
             <div className='row'>
                 {dishItem}
                 {dishComments}
+            </div>
             </div>
         )
     }
