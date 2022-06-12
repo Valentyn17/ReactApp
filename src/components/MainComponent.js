@@ -5,10 +5,6 @@ import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Home from './HomeComponent';
 import About from './AboutComponent';
-import {DISHES} from '../shared/dishes';
-import {COMMENTS} from '../shared/comments';
-import {PROMOTIONS} from '../shared/promotions';
-import {LEADERS} from '../shared/leaders';
 import { Component } from 'react';
 import {Routes,  Route, Navigate, useParams} from 'react-router-dom';
 
@@ -16,12 +12,6 @@ class Main extends Component {
   
   constructor(props){
     super(props);
-    this.state={
-      dishes: DISHES,
-      comments: COMMENTS,
-      leaders: LEADERS,
-      promotions: PROMOTIONS
-    };
   }
 
   
