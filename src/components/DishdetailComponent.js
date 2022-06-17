@@ -128,7 +128,8 @@ function RenderComments({ coments, postComment, dishId }) {
                                 </li>
                             </Fade>
                         );
-                    })}
+                    })
+                    }
                 </Stagger>
             </ul>
             <CommentForm dishId={dishId} postComment={postComment} />

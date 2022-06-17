@@ -6,10 +6,10 @@ import Footer from './FooterComponent';
 import Home from './HomeComponent';
 import About from './AboutComponent';
 import { Component } from 'react';
-import {Routes,  Route, Navigate, useParams, useLocation} from 'react-router-dom';
+import {Routes,  Route, Navigate, useParams} from 'react-router-dom';
 import { withRouter } from '../withRouter';
 import {connect} from 'react-redux';
-import {postComment, fetchDishes, fetchPromos, fetchComments} from '../redux/ActionCreators';
+import {postComment, fetchDishes, fetchPromos, fetchComments, fetchLeaders, postFeedback} from '../redux/ActionCreators';
 import { actions } from 'react-redux-form';
 import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
@@ -28,13 +28,23 @@ const mapDispatchToProps=(dispatch)=>({
   resetFeedbackForm: () => { dispatch(actions.reset('feedback'))},
   fetchComments: ()=>{dispatch(fetchComments())},
   fetchPromos: ()=>{dispatch(fetchPromos())},
-  postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment))
+  fetchLeaders: ()=>{dispatch(fetchLeaders())},
+  postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
+  postFeedback: (firstname, lastname, telnum, email, agree, contactType, message) =>
+    dispatch(
+      postFeedback(
+        firstname,
+        lastname,
+        telnum,
+        email,
+        agree,
+        contactType,
+        message
+      )
+    )
   });
 
-const GetLocation=()=>
-{
-  return useLocation().key;
-}
+
 class Main extends Component {
   
   constructor(props){
@@ -45,7 +55,7 @@ class Main extends Component {
     this.props.fetchDishes();
     this.props.fetchComments();
     this.props.fetchPromos();
-    console.log(this.props.location)
+    this.props.fetchLeaders();
   }
 
   render(){
@@ -65,7 +75,7 @@ class Main extends Component {
     <div >
       <Header />
       <TransitionGroup>
-        <CSSTransition key={()=>GetLocation} classNames="page" timeout={300}>
+        <CSSTransition  classNames="page" timeout={300}>
           <Routes>
             <Route path="/" element={<Navigate replace to="/home" />} />
             <Route path='/home' element={
@@ -75,11 +85,13 @@ class Main extends Component {
                 promosLoading={this.props.promotions.isLoading}
                 promosErrMess={this.props.promotions.errMess}
                 promotion={this.props.promotions.promotions.filter((promotion) => promotion.featured)[0]}
-                leader={this.props.leaders.filter((leader) => leader.featured)[0]} />} />
+                leader={this.props.leaders.leaders.filter((leader) => leader.featured)[0]}
+                leaderLoading={this.props.leaders.isLoading}
+                leaderErrMess={this.props.leaders.errMess} />} />
             <Route exact path='/menu' element={<Menu dishes={this.props.dishes} />} />
             <Route path='/menu/:dishId' element={<DishWithId />} />
             <Route exact path='/contactus' element={<Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
-            <Route exact path='/aboutus' element={<About leaders={this.props.leaders} />} />
+            <Route exact path='/aboutus' element={<About leaders={this.props.leaders.leaders} />} />
           </Routes>
         </CSSTransition>
       </TransitionGroup>
