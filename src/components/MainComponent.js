@@ -51,14 +51,12 @@ class Main extends Component {
       return (
         <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish.id === id)[0]}
           isLoading={this.props.dishes.isLoading}
-          errMess={this.props.dishes.errmess}
+          errMess={this.props.dishes.errMess}
           comments={this.props.comments.comments.filter((comment) => comment.dishId === id)}
-          commentsErrMess={this.props.comments.errmess}
+          commentsErrMess={this.props.comments.errMess}
           addComment={this.props.addComment} />
       );
     };
-
-
   return (
     <div >
       <Header />
@@ -67,9 +65,9 @@ class Main extends Component {
         <Route path='/home' element={
           <Home dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
             dishesLoading={this.props.dishes.isLoading}
-            dishesErrMess={this.props.dishes.errmess}
+            dishesErrMess={this.props.dishes.errMess}
             promosLoading={this.props.promotions.isLoading}
-            promosErrMess={this.props.promotions.errmess}
+            promosErrMess={this.props.promotions.errMess}
             promotion={this.props.promotions.promotions.filter((promotion) => promotion.featured)[0]}
             leader={this.props.leaders.filter((leader) => leader.featured)[0]} />} />
         <Route exact path='/menu' element={<Menu dishes={this.props.dishes} />} />

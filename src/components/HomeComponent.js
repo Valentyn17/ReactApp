@@ -5,12 +5,15 @@ import { baseUrl } from '../shared/baseUrl';
 
 
 function RenderCard({ item, isLoading, errMess }) {
+    console.log( item );
+    console.log(isLoading);
+    console.log(errMess);
     if (isLoading) {
         return (
             <Loading />
         );
     }
-    else if (errMess) {
+    else if (errMess!==undefined) {
         return (
             <h4>{errMess}</h4>
         );
@@ -29,18 +32,19 @@ function RenderCard({ item, isLoading, errMess }) {
 }
 
 function Home(props) {
+    console.log(props);
     return (
         <div className="container">
             <div className="row align-items-start">
                 <div className="col-12 col-md col-1">
                     <RenderCard item={props.dish}
                         isLoading={props.dishesLoading}
-                        errMess={props.dishesErrMes} />
+                        errMess={props.dishesErrMess} />
                 </div>
                 <div className="col-12 col-md col-1">
                     <RenderCard item={props.promotion}
                         isLoading={props.promosLoading}
-                        errMess={props.promosErrMes} />
+                        errMess={props.promosErrMess} />
                 </div>
                 <div className="col-12 col-md col-1">
                     <RenderCard item={props.leader} />
