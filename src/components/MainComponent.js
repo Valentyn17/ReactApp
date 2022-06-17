@@ -10,6 +10,7 @@ import {Routes,  Route, Navigate, useParams} from 'react-router-dom';
 import { withRouter } from '../withRouter';
 import {connect} from 'react-redux';
 import {addComment, fetchDishes} from '../redux/ActionCreators';
+import { actions } from 'react-redux-form';
 
 
 
@@ -24,8 +25,9 @@ const mapStateToProps=state=>{
 
 const mapDispatchToProps=(dispatch)=>({
   addComment: (dishId, rating, author, comment)=>dispatch(addComment(dishId, rating, author, comment)),
-  fetchDishes: ()=>{dispatch(fetchDishes())}
-});
+  fetchDishes: ()=>{dispatch(fetchDishes())},
+  resetFeedbackForm: () => { dispatch(actions.reset('feedback'))}
+  });
 
 
 class Main extends Component {
@@ -64,7 +66,7 @@ class Main extends Component {
             leader={this.props.leaders.filter((leader) => leader.featured)[0]} />} />
         <Route exact path='/menu' element={<Menu dishes={this.props.dishes} />} />
         <Route path='/menu/:dishId' element={<DishWithId />} />
-        <Route exact path='/contactus' element={<Contact />} />
+        <Route exact path='/contactus' element={<Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
         <Route exact path='/aboutus' element={<About leaders={this.props.leaders} />} />
       </Routes>
       <Footer />
